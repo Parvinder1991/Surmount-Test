@@ -5,6 +5,7 @@ import * as eventActions from '../../actions/eventActions';
 import EventList from './EventList';
 import {browserHistory} from 'react-router';
 import PropTypes from 'prop-types';
+import moment from 'moment'
 
 class NFLSchedule extends React.Component {
   constructor(props, context) {
@@ -19,17 +20,17 @@ class NFLSchedule extends React.Component {
   redirectToAddEventPage() {
     browserHistory.push('/event');
   }
-
+  componentDidMount() {
+    let startDate = moment().utc().format()
+    let endDate = moment().add(5, 'days').utc().format()
+    this.props.actions.loadEvents(startDate, endDate)
+  }
   render() {
     const {events} = this.props;
 
     return (
       <div>
-        <h1>Events</h1>
-        <input type="submit"
-               value="Add Event"
-               className="btn btn-primary"
-               onClick={this.redirectToAddEventPage}/>
+        <h1>NFL Schedule - 2019</h1>
         <EventList events={events}/>
       </div>
     );

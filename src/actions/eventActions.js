@@ -6,10 +6,10 @@ export function loadEventsSuccess(events) {
   return { type: types.LOAD_EVENTS_SUCCESS, events};
 }
 
-export function loadEvents() {
+export function loadEvents(startDate, endDate) {
   return function(dispatch) {
     dispatch(beginAjaxCall());
-    return EventApi.getAllEvents().then(events => {
+    return EventApi.getAllEvents(startDate, endDate).then(events => {
       dispatch(loadEventsSuccess(events));
     }).catch(error => {
       throw(error);

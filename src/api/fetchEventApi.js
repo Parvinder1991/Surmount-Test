@@ -1,4 +1,5 @@
 import delay from './delay';
+import http from 'http'
 
 const events = [];
 
@@ -11,10 +12,10 @@ const generateId = (event) => {
 };
 
 class EventApi {
-  static getAllEvents() {
+  static getAllEvents(startDate, endDate) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(Object.assign([], events));
+      fetch(`https://app.ticketmaster.com/discovery/v2/events.json?size=30&startDateTime=${startDate}&endDateTime=${endDate}&genreId=KnvZfZ7vAdE&apikey=5fXAiyK6eWahj6Xoz4YhRTnhpqWBeKzp`).then((res) => {
+        res.json().then(data => resolve(Object.assign([], data._embedded.events)));
       }, delay);
     });
   }
