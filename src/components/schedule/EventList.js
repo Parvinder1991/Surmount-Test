@@ -3,13 +3,14 @@ import EventListRow from './EventListRow';
 import PropTypes from 'prop-types';
 import moment from 'moment'
 
-const EventList = ({events}) => {
+const EventList = ({startDate, endDate,events}) => {
   let rows = []
-  for (let i= 0; i< 5; i++) {
-    let currentDate = moment().add(i, 'days')
-    let momentDate = moment().add(i, 'days').utc().format()
-    rows.push(<div>
-      {currentDate.utc().format('dddd, D MMMM ')}
+  let difference = (moment(endDate).diff(moment(startDate), 'days'))
+  for (let i= 0; i < difference; i++) {
+    let currentDate = moment(startDate).add(i, 'days')
+    let momentDate = moment(startDate).add(i, 'days').utc().format()
+    rows.push(<div style={{width: "60%"}}>
+      <span style={{fontSize:"19px", fontWeight:"600", color:"burlywood"}}>{currentDate.utc().format('dddd, D MMMM ')}</span>
       <table className="table">
       <thead>
       <tr>
@@ -22,8 +23,6 @@ const EventList = ({events}) => {
       </thead>
       <tbody>
       {events.map(event => {
-        console.log(moment(event.dates.start.dateTime).utc().isSame(momentDate, 'day'));
-        console.log(event.dates.start.dateTime, momentDate)
         return moment(event.dates.start.dateTime).utc().isSame(momentDate, 'day') ? <EventListRow key={event.id} event={event}/> : null
       }
        

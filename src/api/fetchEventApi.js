@@ -12,9 +12,9 @@ const generateId = (event) => {
 };
 
 class EventApi {
-  static getAllEvents(startDate, endDate) {
+  static getAllEvents(startDate, endDate, genreId) {
     return new Promise((resolve, reject) => {
-      fetch(`https://app.ticketmaster.com/discovery/v2/events.json?size=30&startDateTime=${startDate}&endDateTime=${endDate}&genreId=KnvZfZ7vAdE&apikey=5fXAiyK6eWahj6Xoz4YhRTnhpqWBeKzp`).then((res) => {
+      fetch(`https://app.ticketmaster.com/discovery/v2/events.json?size=30&startDateTime=${startDate}&endDateTime=${endDate}&genreId=${genreId}&apikey=5fXAiyK6eWahj6Xoz4YhRTnhpqWBeKzp`).then((res) => {
         res.json().then(data => resolve(Object.assign([], data._embedded.events)));
       }, delay);
     });
